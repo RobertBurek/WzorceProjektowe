@@ -1,5 +1,7 @@
 package pl.robworkjava;
 
+import pl.robworkjava.models.FamilyHouse;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -16,8 +18,14 @@ public class Main {
 
         //STATYCZNE METODY WYTWÓRCZE ------------------------------------------------------------------------------
         // from, of, valueOf, instanceOf
-        // tworzenie obiektu z innego obiektu
+        // tworzenie obiektu z innego obiektu np Boolean z boolean poprzez valueOf()
+        boolean isTrue = true;
+        Boolean.valueOf(isTrue);
 
+        // wykorzystanie statycznej metody wytwórczej from którą sami stworzyliśmy
+        FamilyHouse newFamilyHouse = FamilyHouse.from(firstHouse);
+
+        System.out.println(newFamilyHouse);
 
     }
 }

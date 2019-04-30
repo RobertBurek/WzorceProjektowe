@@ -47,4 +47,19 @@ public class House {
         }
     }
 
+    public String getAdress() {
+        return adress;
+    }
+
+    public Integer getFloorsNumber() {
+        return floorsNumber;
+    }
+
+    public Integer getDoorsNumber() {
+        return doorsNumber;
+    }
+
+    public Integer getWindowsNumber() {
+        return windowsNumber;
+    }
 }
