@@ -27,5 +27,14 @@ public class Main {
 
         System.out.println(newFamilyHouse);
 
+        //SINGLETON  -----------------------------------------------------------------------------------------------
+        //nie wstrzykujemy, błędny kierunek
+        //najlepiej się sprawdzają w logowaniu i  raportach w logach,
+        //w repozytoriach i śledzenia ruchów użytkownika po aplikacji, do cacha do narzędzi śledzących,
+        //do instancji bezstanowych przetrzymywanych przez cały czas działania programu
+        LoggerOld.getInstance().logToConsole();
+
+        Logger.getInstance().logToConsole();
+
     }
 }
