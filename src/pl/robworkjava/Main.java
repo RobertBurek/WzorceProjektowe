@@ -11,7 +11,13 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         creationPatterns();
+        observerPattern();
 
+
+
+    }
+
+    private static void observerPattern() throws InterruptedException {
         //OBSERWATOR
         //obsługa interfejsu użytkownika, kliknięcie
         //obsługa zmian repozytorium, zmiana danych
@@ -38,7 +44,6 @@ public class Main {
 
         //metoda generująca zmienne wartości Temp
         GeneratorTemp(observableValue);
-
     }
 
     private static void GeneratorTemp(ObservableTempValue observableValue) throws InterruptedException {
