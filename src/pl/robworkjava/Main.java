@@ -1,5 +1,6 @@
 package pl.robworkjava;
 
+import pl.robworkjava.adapter.OfficialTrippingEmployee;
 import pl.robworkjava.models.FamilyHouse;
 import pl.robworkjava.observers.ObservableTempValue;
 import pl.robworkjava.strategy.*;
@@ -34,6 +35,7 @@ public class Main {
         mike.makeSports();
         mike.breakfastStrategy = new SandwichBreakfastStrategy();
 
+
         mike.goToWork();
         mike.doYourJob();
         mike.eatYourBreakfast(mike); //przekazałem Employee do metody i tam dałem mu sportStrategy
@@ -47,6 +49,14 @@ public class Main {
 //        mike.sportstrategy = new BaskedBallSportStrategy();
         mike.makeSports();
 
+
+        System.out.println("------------------------------ADAPTER---------------------------------------------------");
+
+        //ADAPTER .travel -> goToWork()
+        //rozszerzamy funkcjonalność mike nie zmieniając jego klasy
+        //tworzymy dodatkową klasę z polem poszerzanej klasy oraz metodę poszerzającą
+        OfficialTrippingEmployee otMike = new OfficialTrippingEmployee(mike);
+        otMike.goToClient();
     }
 
     private static void observerPattern() throws InterruptedException {
