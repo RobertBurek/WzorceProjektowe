@@ -1,9 +1,14 @@
 package pl.robworkjava;
 
+import pl.robworkjava.strategyHouse.DoorsStrategy;
+import pl.robworkjava.strategyHouse.WindowsStrategy;
+
 /**
  * Created by Robert Burek
  */
-public class House {
+public class House implements WindowsStrategy, DoorsStrategy {
+    public WindowsStrategy windowsStrategy;
+    public DoorsStrategy doorsStrategy;
     private String adress;
     private Integer floorsNumber;
     private Integer doorsNumber;
@@ -14,6 +19,16 @@ public class House {
         this.floorsNumber = floorsNumber;
         this.doorsNumber = doorsNumber;
         this.windowsNumber = windowsNumber;
+    }
+
+    @Override
+    public void makeWatsWindows() {
+        windowsStrategy.makeWatsWindows();
+    }
+
+    @Override
+    public void makeSomethingDoors() {
+        doorsStrategy.makeSomethingDoors();
     }
 
     public static class HouseBuilder {
@@ -62,4 +77,5 @@ public class House {
     public Integer getWindowsNumber() {
         return windowsNumber;
     }
+
 }

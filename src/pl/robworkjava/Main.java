@@ -2,6 +2,8 @@ package pl.robworkjava;
 
 import pl.robworkjava.models.FamilyHouse;
 import pl.robworkjava.observers.ObservableTempValue;
+import pl.robworkjava.strategy.*;
+import pl.robworkjava.strategyHouse.*;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -10,10 +12,40 @@ import java.util.Observer;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        creationPatterns();
-        observerPattern();
+        //creationPatterns();
+        //observerPattern();
 
+        //STRATEGIA
+        //strategia zastępuje enuma lub switch case z logiką - klasami strategii
+        //rozsprzęganie odpowiedzialnosci zamiast switcha
 
+        //tworzymy klasę Employee z implementacjami interfejsów które zarazem są polami tej klasy
+        //mamy pole jobStrategy typu interfejsowego JobStrategy
+        //interfejs JobStrategy ma metodę doYourJob, która będzie nadpisywana w odpowiednich klasach
+        //nastepnie tworzymy potrzebne klasy wykonywanej pracy np DoctorJobStrategy, ManagerJobStrategy
+        //klasy te implementują odpowiedni interfejs z metodą do wykonania doYourJob()
+        //w tej metodzie (np doYourJob) umieszczamy odpowiedni kod funkcyjne dla danej czynności
+
+        Employee mike = new Employee();
+
+        mike.travelStrategy = new BikeTravelStrategy();
+        mike.jobStrategy = new DoctorJobStrategy();
+        mike.sportstrategy = new WolkingSportStrategy();
+        mike.makeSports();
+        mike.breakfastStrategy = new SandwichBreakfastStrategy();
+
+        mike.goToWork();
+        mike.doYourJob();
+        mike.eatYourBreakfast(mike); //przekazałem Employee do metody i tam dałem mu sportStrategy
+
+        mike.travelStrategy = new CarTravelStrategy();
+        mike.goToWork();
+        mike.jobStrategy = new ManagerJobStrategy();
+        mike.doYourJob();
+
+        Thread.sleep(2000);
+//        mike.sportstrategy = new BaskedBallSportStrategy();
+        mike.makeSports();
 
     }
 
@@ -55,11 +87,12 @@ public class Main {
             if (temp == 0) System.out.print(" zero " + temp);
             //obserwowanie wartości
             observableValue.setValue(temp);
+            if ((temp >= 3) || (temp <= -3)) break;
         }
     }
 
 
-    private static void creationPatterns() {
+    private static void creationPatterns() throws InterruptedException {
         //BUILDER  -----------------------------------------------------------------------------------------------
         //wzorzec budowniczy
 
@@ -69,6 +102,27 @@ public class Main {
                 .setDoorsNumber(3)
                 .setWindowsNumber(10)
                 .build();
+
+        // zastosuję wzorzec czynnościowy - Strategia (związany z oknami)
+        firstHouse.windowsStrategy = new OpenWindowsStrategy();
+        firstHouse.makeWatsWindows();
+        Thread.sleep(2000);
+        firstHouse.windowsStrategy = new DestroyWindowsStrategy();
+        firstHouse.makeWatsWindows();
+        Thread.sleep(2000);
+        firstHouse.windowsStrategy = new CloseWinkowsStrategy();
+        firstHouse.makeWatsWindows();
+        Thread.sleep(2000);
+        // strategia związana z drzwiami
+        firstHouse.doorsStrategy = new OpenDoorsStrategy();
+        firstHouse.makeSomethingDoors();
+        Thread.sleep(3000);
+        firstHouse.doorsStrategy = new BrokenDoorsStrategy();
+        firstHouse.makeSomethingDoors();
+        Thread.sleep(3000);
+        firstHouse.doorsStrategy = new ClosedDoorsStrategy();
+        firstHouse.makeSomethingDoors();
+        Thread.sleep(3000);
 
         //STATYCZNE METODY WYTWÓRCZE ------------------------------------------------------------------------------
         // from, of, valueOf, instanceOf
