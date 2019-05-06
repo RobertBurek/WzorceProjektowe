@@ -1,6 +1,10 @@
 package pl.robworkjava;
 
 import pl.robworkjava.adapter.OfficialTrippingEmployee;
+import pl.robworkjava.decorator.DeadLineBonus;
+import pl.robworkjava.decorator.FreqBonus;
+import pl.robworkjava.decorator.Payable;
+import pl.robworkjava.decorator.SpecialBonus;
 import pl.robworkjava.models.FamilyHouse;
 import pl.robworkjava.observers.ObservableTempValue;
 import pl.robworkjava.strategy.*;
@@ -45,18 +49,39 @@ public class Main {
         mike.jobStrategy = new ManagerJobStrategy();
         mike.doYourJob();
 
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 //        mike.sportstrategy = new BaskedBallSportStrategy();
         mike.makeSports();
 
 
         System.out.println("------------------------------ADAPTER---------------------------------------------------");
 
-        //ADAPTER .travel -> goToWork()
+        //ADAPTER
+        // .travel -> goToWork()
         //rozszerzamy funkcjonalność mike nie zmieniając jego klasy
         //tworzymy dodatkową klasę z polem poszerzanej klasy oraz metodę poszerzającą
         OfficialTrippingEmployee otMike = new OfficialTrippingEmployee(mike);
         otMike.goToClient();
+
+        System.out.println("------------------------------DEKORATOR-------------------------------------------------");
+        mike.setSalary(10000);
+
+        //DEKORATOR
+        //możemy dodawać kolejne ozdobniki bez względu na kolejność
+        System.out.println("Zarobki podstawowe:  " + mike.getSalary());
+        System.out.println("Zarobki z premią: " + new FreqBonus(new DeadLineBonus(new SpecialBonus(mike))).getSalary());
+
+        Payable employee = mike;
+        if (mike.getSalary() > 8000) {
+            employee = new SpecialBonus(employee);
+        }
+        if (mike.travelStrategy instanceof BikeTravelStrategy) {
+            employee = new FreqBonus(employee);
+        }
+
+        System.out.println("Zarobki employee:  " + employee.getSalary());
+
+
     }
 
     private static void observerPattern() throws InterruptedException {
