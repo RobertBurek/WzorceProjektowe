@@ -1,9 +1,13 @@
 package pl.robworkjava.strategy;
 
+import pl.robworkjava.decorator.Payable;
+
 /**
  * Created by Robert Burek
  */
-public class Employee implements TravelStrategy, JobStrategy, BreakfastStrategy, SportStrategy {
+public class Employee implements TravelStrategy, JobStrategy, BreakfastStrategy, SportStrategy, Payable {
+
+    private int salary = 0;
 
     public TravelStrategy travelStrategy;
     public JobStrategy jobStrategy;
@@ -28,5 +32,14 @@ public class Employee implements TravelStrategy, JobStrategy, BreakfastStrategy,
     @Override
     public void eatYourBreakfast(Employee employee) {
         breakfastStrategy.eatYourBreakfast(employee);
+    }
+
+    @Override
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 }
