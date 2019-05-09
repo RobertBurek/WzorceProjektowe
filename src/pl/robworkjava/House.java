@@ -1,12 +1,16 @@
 package pl.robworkjava;
 
+import pl.robworkjava.decoratorHouse.CzyDecorowac;
 import pl.robworkjava.strategyHouse.DoorsStrategy;
 import pl.robworkjava.strategyHouse.WindowsStrategy;
 
 /**
  * Created by Robert Burek
  */
-public class House implements WindowsStrategy, DoorsStrategy {
+public class House implements WindowsStrategy, DoorsStrategy, CzyDecorowac {
+
+    private String decorator=" Jestem udecorowany: ";
+
     public WindowsStrategy windowsStrategy;
     public DoorsStrategy doorsStrategy;
     private String adress;
@@ -19,6 +23,11 @@ public class House implements WindowsStrategy, DoorsStrategy {
         this.floorsNumber = floorsNumber;
         this.doorsNumber = doorsNumber;
         this.windowsNumber = windowsNumber;
+    }
+
+    @Override
+    public String getDecorator() {
+        return decorator;
     }
 
     @Override

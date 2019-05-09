@@ -1,10 +1,11 @@
 package pl.robworkjava;
 
 import pl.robworkjava.adapter.OfficialTrippingEmployee;
-import pl.robworkjava.decorator.DeadLineBonus;
-import pl.robworkjava.decorator.FreqBonus;
-import pl.robworkjava.decorator.Payable;
-import pl.robworkjava.decorator.SpecialBonus;
+import pl.robworkjava.decorator.*;
+import pl.robworkjava.decoratorHouse.CzyDecorowac;
+import pl.robworkjava.decoratorHouse.DrewnianeKawalki;
+import pl.robworkjava.decoratorHouse.MurKawalki;
+import pl.robworkjava.decoratorHouse.SzklaneKawalki;
 import pl.robworkjava.models.FamilyHouse;
 import pl.robworkjava.observers.ObservableTempValue;
 import pl.robworkjava.strategy.*;
@@ -17,7 +18,7 @@ import java.util.Observer;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        //creationPatterns();
+        creationPatterns();
         //observerPattern();
 
         //STRATEGIA
@@ -68,6 +69,8 @@ public class Main {
 
         //DEKORATOR
         //możemy dodawać kolejne ozdobniki bez względu na kolejność
+        //wymagany jest interfejs łączący - Payable oraz klasy odpowiadające ozdobnikom (dekorartorom)
+        //klasa Bonus sbstarkcyjna łacząca zliczająca ozdobniki (bonusy)
         System.out.println("Zarobki podstawowe:  " + mike.getSalary());
         System.out.println("Zarobki z premią: " + new FreqBonus(new DeadLineBonus(new SpecialBonus(mike))).getSalary());
 
@@ -145,9 +148,9 @@ public class Main {
         firstHouse.windowsStrategy = new DestroyWindowsStrategy();
         firstHouse.makeWatsWindows();
         Thread.sleep(2000);
-        firstHouse.windowsStrategy = new CloseWinkowsStrategy();
-        firstHouse.makeWatsWindows();
-        Thread.sleep(2000);
+//        firstHouse.windowsStrategy = new CloseWinkowsStrategy();
+//        firstHouse.makeWatsWindows();
+//        Thread.sleep(2000);
         // strategia związana z drzwiami
         firstHouse.doorsStrategy = new OpenDoorsStrategy();
         firstHouse.makeSomethingDoors();
@@ -155,9 +158,30 @@ public class Main {
         firstHouse.doorsStrategy = new BrokenDoorsStrategy();
         firstHouse.makeSomethingDoors();
         Thread.sleep(3000);
-        firstHouse.doorsStrategy = new ClosedDoorsStrategy();
-        firstHouse.makeSomethingDoors();
-        Thread.sleep(3000);
+//        firstHouse.doorsStrategy = new ClosedDoorsStrategy();
+//        firstHouse.makeSomethingDoors();
+//        Thread.sleep(3000);
+
+        System.out.println("------------------------------------------DECORATOR na HOUSE -------------------------");
+        System.out.println("Przed udekorowaniem: "+ firstHouse.getDecorator());
+        System.out.println("Możliwe dekoracje: " +new MurKawalki(new SzklaneKawalki(new DrewnianeKawalki(firstHouse))).getDecorator());
+        System.out.println("Możliwe inna kolejność: " + new DrewnianeKawalki(new SzklaneKawalki(new MurKawalki(firstHouse))).getDecorator());
+
+        CzyDecorowac dekorowany = firstHouse;
+
+        if (firstHouse.windowsStrategy instanceof DestroyWindowsStrategy) {
+            dekorowany = new SzklaneKawalki(dekorowany);
+        }
+        if (firstHouse.doorsStrategy instanceof BrokenDoorsStrategy) {
+            dekorowany = new DrewnianeKawalki(dekorowany);
+        }
+
+        if (dekorowany.getDecorator().length()>70) {
+            dekorowany = new MurKawalki(dekorowany);
+        }
+
+        System.out.println("Po udekorowanie: " + dekorowany.getDecorator());
+        System.out.println("------------------------------------------DECORATOR na HOUSE ----END----------------");
 
         //STATYCZNE METODY WYTWÓRCZE ------------------------------------------------------------------------------
         // from, of, valueOf, instanceOf
