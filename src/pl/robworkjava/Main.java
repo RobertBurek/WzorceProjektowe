@@ -18,10 +18,11 @@ import java.util.Observer;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        creationPatterns();
+        //creationPatterns();
         //observerPattern();
 
-        //STRATEGIA
+
+        //STRATEGIA -----------------------------------------------------------------------------------
         //strategia zastępuje enuma lub switch case z logiką - klasami strategii
         //rozsprzęganie odpowiedzialnosci zamiast switcha
 
@@ -39,7 +40,6 @@ public class Main {
         mike.sportstrategy = new WolkingSportStrategy();
         mike.makeSports();
         mike.breakfastStrategy = new SandwichBreakfastStrategy();
-
 
         mike.goToWork();
         mike.doYourJob();
@@ -67,6 +67,7 @@ public class Main {
         System.out.println("------------------------------DEKORATOR-------------------------------------------------");
         mike.setSalary(10000);
 
+
         //DEKORATOR
         //możemy dodawać kolejne ozdobniki bez względu na kolejność
         //wymagany jest interfejs łączący - Payable oraz klasy odpowiadające ozdobnikom (dekorartorom)
@@ -85,7 +86,22 @@ public class Main {
         System.out.println("Zarobki employee:  " + employee.getSalary());
 
 
+        System.out.println("--------------------------------------------FASADA-------------------------------------");
+        //FASADA -------------------------------------------------------------------------------------
+        //najprostsza fasada to odelegowanie części czynności do osobnej medoty na przykład
+        //tworzymy metodę jednemu z pracowników dajemy wolny dom w nagrodę i losowo.
+        //bardziej rozbudowana fasada będzie w samej metodzie
+        //osobna klasa ApiFacade wraz z rozbitymi metodami wewnetrznymi
+
+        ApiFacade facade = new ApiFacade(); //prosta instancja
+        Employee robin = facade.createDoctor(9245);
+        facade.pushDoctorToJob(robin);
+        facade.countSalary(robin);
+        System.out.println("Wypłata: " + facade.countSalary(robin));
+        facade.giveFreeHouseToBestFreqEmployee(robin);
+
     }
+
 
     private static void observerPattern() throws InterruptedException {
         //OBSERWATOR
@@ -163,8 +179,8 @@ public class Main {
 //        Thread.sleep(3000);
 
         System.out.println("------------------------------------------DECORATOR na HOUSE -------------------------");
-        System.out.println("Przed udekorowaniem: "+ firstHouse.getDecorator());
-        System.out.println("Możliwe dekoracje: " +new MurKawalki(new SzklaneKawalki(new DrewnianeKawalki(firstHouse))).getDecorator());
+        System.out.println("Przed udekorowaniem: " + firstHouse.getDecorator());
+        System.out.println("Możliwe dekoracje: " + new MurKawalki(new SzklaneKawalki(new DrewnianeKawalki(firstHouse))).getDecorator());
         System.out.println("Możliwe inna kolejność: " + new DrewnianeKawalki(new SzklaneKawalki(new MurKawalki(firstHouse))).getDecorator());
 
         CzyDecorowac dekorowany = firstHouse;
@@ -176,7 +192,7 @@ public class Main {
             dekorowany = new DrewnianeKawalki(dekorowany);
         }
 
-        if (dekorowany.getDecorator().length()>70) {
+        if (dekorowany.getDecorator().length() > 70) {
             dekorowany = new MurKawalki(dekorowany);
         }
 

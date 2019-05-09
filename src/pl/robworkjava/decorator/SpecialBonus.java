@@ -10,6 +10,6 @@ public class SpecialBonus extends Bonus {
 
     @Override
     protected int getPaidBonus(int salary) {
-        return 1000;
+        return 854;
     }
 }

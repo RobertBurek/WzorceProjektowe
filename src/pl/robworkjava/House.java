@@ -87,4 +87,13 @@ public class House implements WindowsStrategy, DoorsStrategy, CzyDecorowac {
         return windowsNumber;
     }
 
+    @Override
+    public String toString() {
+        return "House{" +
+                ", adress='" + adress + '\'' +
+                ", floors=" + floorsNumber +
+                ", doors=" + doorsNumber +
+                ", windows=" + windowsNumber +
+                '}';
+    }
 }
